@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -8,21 +9,18 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-         appBar: AppBar(
-            title: Text("Dashboard"),
-            backgroundColor: Colors.blueGrey,
-         ),
-         body: Center(
-            child: Text("Random value: ${getNumber()}")
-         ),
+      backgroundColor: Colors.lightGreen,
+        body: Center(
+          child: IconButton(
+            icon: Icon(
+              FontAwesomeIcons.boxesStacked
+              ),
+              onPressed: (){},
+              iconSize: 100,
+              color: Colors.lightGreenAccent,
+              highlightColor: Colors.blueAccent,
+          ),
+        ),
         );
   }
 }
-//easy way
-// int getNumber(){
-//   Random random = new Random();
-//   var number = random.nextInt(10);
-//   return number;
-// }
-//better way
-int getNumber(){return Random().nextInt(10);}
