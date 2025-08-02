@@ -6,32 +6,32 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Home"), ),
-      body: Container(
-       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+     body: Container(
+      child: ListView(
         children: [
-          Column(
-            children: [
-              Icon(Icons.phone, size: 35.00,),
-              Text("Phone"),
-            ],
+          ListTile(
+            leading: CircleAvatar(child: Icon(Icons.alarm_on_sharp), backgroundColor: Colors.green[200],),
+            title: Text("Sales"),
+            subtitle: Text("Sales of week"),
+            trailing: Text("3500"),
+            onTap: (){},
           ),
-          Column(
-            children: [
-              Icon(Icons.card_travel, size: 35.00,),
-              Text("Cart"),
-            ],
-          ),
-          Column(
-            children: [
-              Icon(Icons.share, size: 35.00,),
-              Text("Share"),
-            ],
+           ListTile(
+            leading: Icon(Icons.alarm_on_sharp),
+            title: Text("Sales"),
+            subtitle: Text("Customers"),
+            trailing: Text("30"),
+            onTap: (){},
+          ), ListTile(
+            leading: Icon(Icons.alarm_on_sharp),
+            title: Text("Sales"),
+            subtitle: Text("Profit"),
+            trailing: Text("500"),
+            onTap: (){},
           ),
         ],
-       ),
       ),
+     ),
     );
   }
 }
