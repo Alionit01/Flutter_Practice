@@ -6,22 +6,23 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Home"),
+        leading: IconButton(onPressed: (){}, icon: Icon(Icons.menu)),
+        actions: [
+          IconButton(onPressed: (){}, icon: Icon(Icons.card_travel)),
+          IconButton(onPressed: (){}, icon: Icon(Icons.search)),
+          IconButton(onPressed: (){}, icon: Icon(Icons.menu_book)),
+        ],
+      ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {},
-          child: Text("Ali is the best"),
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.all(20.0),
-            backgroundColor: Colors.amber,
-            foregroundColor: Colors.black,
-            fixedSize: Size(250, 50),
-            textStyle: TextStyle(
-              fontSize: 25.0,
-              fontWeight: FontWeight.bold,
-            ),
-            shape: BeveledRectangleBorder(),
-          ),
-        ),
+       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("App Bar", style: TextStyle(fontSize: 22.0),),
+          Text("Ali yoyo", style: TextStyle(fontWeight: FontWeight.bold),),
+        ],
+       ),
       ),
     );
   }
