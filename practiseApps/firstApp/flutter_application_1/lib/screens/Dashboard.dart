@@ -9,18 +9,17 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightGreen,
-        body: Center(
-          child: IconButton(
-            icon: Icon(
-              FontAwesomeIcons.boxesStacked
-              ),
-              onPressed: (){},
-              iconSize: 100,
-              color: Colors.lightGreenAccent,
-              highlightColor: Colors.blueAccent,
-          ),
-        ),
+    body: Container(
+      color: Colors.amber,
+      width: 450.00,
+      height: 350.0,
+      padding: EdgeInsets.all(20.00),
+      alignment: Alignment.center,
+      child: Text(
+      "boring",
+      style: TextStyle(fontSize: 40.0,),
+      ),
+    ),
         );
   }
 }

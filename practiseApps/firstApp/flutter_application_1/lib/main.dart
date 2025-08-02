@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/Home.dart';
 import 'screens/Dashboard.dart';
 
 void main() => runApp(MyApp());
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
         title: "My First App", 
-        home: Dashboard()
+        home: Home()
       );
   }
 }
