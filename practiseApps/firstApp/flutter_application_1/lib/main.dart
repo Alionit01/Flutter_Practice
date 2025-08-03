@@ -1,18 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/Home.dart';
-import 'screens/Dashboard.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(Main());
 
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Main extends StatelessWidget {
+  const Main({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-        title: "My First App", 
-        home: Home()
-      );
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Home"),
+          centerTitle: true,
+        ),
+        body: example(),
+      ),
+    );
+  }
+}
+
+class example extends StatefulWidget {
+  const example({super.key});
+
+  @override
+  State<example> createState() => _exampleState();
+}
+
+bool like = false;
+
+class _exampleState extends State<example> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        ListTile(
+          title: Text("Shoes"),
+          trailing: IconButton(
+            icon: like? (Icon(Icons.favorite)) : (Icon(Icons.favorite_border)) , 
+          onPressed: (){
+            setState(() {
+               like = !like;
+            });
+          },),
+        )
+      ],
+    );
   }
 }
