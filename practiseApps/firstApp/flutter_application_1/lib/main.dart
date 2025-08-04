@@ -1,49 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/forms.dart';
 
 void main() => runApp(Main());
 
 class Main extends StatelessWidget {
-  const Main({Key? key}) : super(key: key);
+  const Main({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Home"),
-          centerTitle: true,
-        ),
-        body: example(),
-      ),
-    );
-  }
-}
-
-class example extends StatefulWidget {
-  const example({super.key});
-
-  @override
-  State<example> createState() => _exampleState();
-}
-
-bool like = false;
-
-class _exampleState extends State<example> {
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        ListTile(
-          title: Text("Shoes"),
-          trailing: IconButton(
-            icon: like? (Icon(Icons.favorite)) : (Icon(Icons.favorite_border)) , 
-          onPressed: (){
-            setState(() {
-               like = !like;
-            });
-          },),
-        )
-      ],
+      home: MyForm()
     );
   }
 }
