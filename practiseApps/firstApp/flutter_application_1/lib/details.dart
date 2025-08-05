@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class Details extends StatelessWidget {
-  const Details({super.key});
+  Details({super.key, required this.productName });
+
+  String productName;
 
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        title: Text("Details"),
+        title: Text(productName),
         leading: IconButton(
           onPressed: (){
             Navigator.pop(context);
@@ -15,8 +17,16 @@ class Details extends StatelessWidget {
           icon: Icon(Icons.arrow_back),
            ),
       ),
-      body: Center(
-        child: Text("Details page"),
+      body: Container(
+        padding: EdgeInsets.all(20.0),
+        child: ListView(
+          children: [
+            ListTile(
+              leading: Icon(Icons.account_balance_wallet_outlined),
+              title: Text(productName),
+            )
+          ],
+        ),
       ),
     );
   }
