@@ -13,16 +13,16 @@ class MyForm extends StatefulWidget {
 class _MyFormState extends State<MyForm> {
   final _productController = TextEditingController();
   final _productDController = TextEditingController();
-
   bool? _listTileCheckBox = false;
   ProductTypeEnum _productTypeEnum = ProductTypeEnum.Downloadable; // Added default value
-
   final _productSizeList = ["Small", "Medium", "Large", "XLarge"];
- 
-  _MyFormState(){
+
+  final _formKey = GlobalKey<FormState>();
+
+  _MyFormState() {
     _selectedVal = _productSizeList[0];
   }
- 
+
   String? _selectedVal = "";
 
   @override
@@ -42,6 +42,9 @@ class _MyFormState extends State<MyForm> {
           children: [
             const Text("Add products details"),
             SizedBox(height: 30.0),
+
+            
+
             MyTextField(
               fieldName: 'Product Name',
               myController: _productController,
@@ -95,7 +98,31 @@ class _MyFormState extends State<MyForm> {
                 ),
               ],
             ),
-           
+            SizedBox(height: 10.0),
+            DropdownButtonFormField(
+              value: _selectedVal,
+              items: _productSizeList
+                  .map((e) => DropdownMenuItem(child: Text(e), value: e))
+                  .toList(),
+              onChanged: (value) {
+                setState(() {
+                  _selectedVal = value;
+                });
+              },
+              icon: const Icon(
+                Icons.arrow_drop_down_circle,
+                color: Colors.deepPurple,
+              ),
+              dropdownColor: Colors.deepPurple.shade50,
+              decoration: InputDecoration(
+                labelText: "Product Sizes",
+                prefixIcon: Icon(
+                  Icons.accessibility_new_rounded,
+                  color: Colors.deepPurple,
+                ),
+                border: UnderlineInputBorder(),
+              ),
+            ),
           ],
         ),
       ),
@@ -154,11 +181,7 @@ class MyTextField extends StatelessWidget {
 }
 
 class MyCheckBox extends StatelessWidget {
-  const MyCheckBox({
-    super.key,
-    required this.value,
-    required this.onChanged,
-  });
+  const MyCheckBox({super.key, required this.value, required this.onChanged});
 
   final bool? value;
   final ValueChanged<bool?> onChanged;
