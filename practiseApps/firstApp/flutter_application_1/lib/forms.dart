@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/details.dart';
 
+enum ProductTypeEnum { Downloadable, Deliverable }
+
 class MyForm extends StatefulWidget {
   const MyForm({super.key});
 
@@ -9,16 +11,24 @@ class MyForm extends StatefulWidget {
 }
 
 class _MyFormState extends State<MyForm> {
-  var _productName;
   final _productController = TextEditingController();
   final _productDController = TextEditingController();
-  bool? _checkBox = false;
+
   bool? _listTileCheckBox = false;
+  ProductTypeEnum _productTypeEnum = ProductTypeEnum.Downloadable; // Added default value
+
+  final _productSizeList = ["Small", "Medium", "Large", "XLarge"];
+ 
+  _MyFormState(){
+    _selectedVal = _productSizeList[0];
+  }
+ 
+  String? _selectedVal = "";
 
   @override
   void dispose() {
-    // just for better memory managemnt
     _productController.dispose();
+    _productDController.dispose();
     super.dispose();
   }
 
@@ -36,43 +46,57 @@ class _MyFormState extends State<MyForm> {
               fieldName: 'Product Name',
               myController: _productController,
               myIcon: Icons.propane_outlined,
-              prefixIconColor: Colors.deepPurple.shade300, ),
-                SizedBox(height: 10.0), 
+              prefixIconColor: Colors.deepPurple.shade300,
+            ),
+            SizedBox(height: 10.0),
             MyTextField(
               fieldName: 'Product Description',
               myController: _productDController,
               myIcon: Icons.description_outlined,
-              prefixIconColor: Colors.deepPurple.shade300, ),
-              SizedBox(height: 10.0),
-             myBtn(context),
-            // 1.   CheckBox
-              Checkbox(
-                value: _checkBox,
-                checkColor: Colors.white,
-                activeColor: Colors.deepPurple,
-                tristate: true,
-                onChanged: (value) {
-                  setState(() {
-                    _checkBox = value;
-                  });
-                },
-              ),
-//2.   CheckBoxListTile
-              CheckboxListTile(
-                value: _listTileCheckBox,
-                checkColor: Colors.white,
-                activeColor: Colors.deepPurple,
-                tristate: true,
-                title: Text("Top Product"),
-                onChanged: (value) {
-                  setState(() {
-                    _listTileCheckBox = value;
-                  });
-                },
-                controlAffinity: ListTileControlAffinity.leading, //Leading Checkbox Icon
-              ),
-             ],
-             
+              prefixIconColor: Colors.deepPurple.shade300,
+            ),
+            SizedBox(height: 10.0),
+            myBtn(context),
+            SizedBox(height: 10.0),
+            MyCheckBox(
+              value: _listTileCheckBox,
+              onChanged: (val) {
+                setState(() {
+                  _listTileCheckBox = val;
+                });
+              },
+            ),
+            SizedBox(height: 10.0),
+            Row(
+              children: [
+                Expanded(
+                  child: MyRadioButton(
+                    title: ProductTypeEnum.Downloadable.name,
+                    value: ProductTypeEnum.Downloadable,
+                    groupValue: _productTypeEnum,
+                    onChanged: (val) {
+                      setState(() {
+                        _productTypeEnum = val!;
+                      });
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: MyRadioButton(
+                    title: ProductTypeEnum.Deliverable.name,
+                    value: ProductTypeEnum.Deliverable,
+                    groupValue: _productTypeEnum,
+                    onChanged: (val) {
+                      setState(() {
+                        _productTypeEnum = val!;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+           
+          ],
         ),
       ),
     );
@@ -119,26 +143,26 @@ class MyTextField extends StatelessWidget {
       controller: myController,
       decoration: InputDecoration(
         labelText: fieldName,
-        prefixIcon: Icon(myIcon, color: prefixIconColor,),
+        prefixIcon: Icon(myIcon, color: prefixIconColor),
         border: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.deepPurple.shade300)
+          borderSide: BorderSide(color: Colors.deepPurple.shade300),
         ),
-        labelStyle: const TextStyle(color: Colors.deepPurple)
+        labelStyle: const TextStyle(color: Colors.deepPurple),
       ),
     );
   }
 }
 
-class MyCheckBox extends StatefulWidget {
-  MyCheckBox({super.key, required this.listTileCheckBox});
+class MyCheckBox extends StatelessWidget {
+  const MyCheckBox({
+    super.key,
+    required this.value,
+    required this.onChanged,
+  });
 
-  bool? listTileCheckBox;
+  final bool? value;
+  final ValueChanged<bool?> onChanged;
 
-  @override
-  State<MyCheckBox> createState() => _MyCheckBoxState();
-}
-
-class _MyCheckBoxState extends State<MyCheckBox> {
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -155,18 +179,41 @@ class _MyCheckBoxState extends State<MyCheckBox> {
               checkColor: Colors.white,
               activeColor: Colors.deepPurple,
               tristate: true,
-              value: widget.listTileCheckBox,
-              onChanged: (val) {
-                setState(() => widget.listTileCheckBox = val);
-              },
+              value: value,
+              onChanged: onChanged,
             ),
             const Padding(
               padding: EdgeInsets.only(right: 15.0),
               child: Text("Top Product"),
-       ),
+            ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class MyRadioButton extends StatelessWidget {
+  const MyRadioButton({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.groupValue,
+    required this.onChanged,
+  });
+
+  final String title;
+  final ProductTypeEnum value;
+  final ProductTypeEnum groupValue;
+  final ValueChanged<ProductTypeEnum?> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return RadioListTile<ProductTypeEnum>(
+      title: Text(title),
+      value: value,
+      groupValue: groupValue,
+      onChanged: onChanged,
     );
   }
 }
