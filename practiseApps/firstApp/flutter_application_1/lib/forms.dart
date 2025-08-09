@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/details.dart';
+import 'package:flutter_application_1/models/product_modal.dart';
+import 'package:flutter_application_1/widgets/myButton.dart';
+import 'package:flutter_application_1/widgets/myTextField.dart';
 
 enum ProductTypeEnum { Downloadable, Deliverable }
 
@@ -14,16 +17,17 @@ class _MyFormState extends State<MyForm> {
   final _productController = TextEditingController();
   final _productDController = TextEditingController();
   bool? _listTileCheckBox = false;
-  ProductTypeEnum _productTypeEnum = ProductTypeEnum.Downloadable; // Added default value
+  ProductTypeEnum _productTypeEnum = ProductTypeEnum.Downloadable;
   final _productSizeList = ["Small", "Medium", "Large", "XLarge"];
 
   final _formKey = GlobalKey<FormState>();
+  
+
+  String? _selectedVal;
 
   _MyFormState() {
     _selectedVal = _productSizeList[0];
   }
-
-  String? _selectedVal = "";
 
   @override
   void dispose() {
@@ -35,146 +39,136 @@ class _MyFormState extends State<MyForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Form"), centerTitle: true),
+      appBar: AppBar(
+        title: Text("Product Form", style: TextStyle(color: Colors.white)),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
+        elevation: 4,
+      ),
       body: Container(
         padding: EdgeInsets.all(20.0),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.teal.shade50, Colors.white],
+          ),
+        ),
         child: ListView(
           children: [
-            const Text("Add products details"),
-            SizedBox(height: 30.0),
-
-            
-
-            MyTextField(
-              fieldName: 'Product Name',
-              myController: _productController,
-              myIcon: Icons.propane_outlined,
-              prefixIconColor: Colors.deepPurple.shade300,
-            ),
-            SizedBox(height: 10.0),
-            MyTextField(
-              fieldName: 'Product Description',
-              myController: _productDController,
-              myIcon: Icons.description_outlined,
-              prefixIconColor: Colors.deepPurple.shade300,
-            ),
-            SizedBox(height: 10.0),
-            myBtn(context),
-            SizedBox(height: 10.0),
-            MyCheckBox(
-              value: _listTileCheckBox,
-              onChanged: (val) {
-                setState(() {
-                  _listTileCheckBox = val;
-                });
-              },
-            ),
-            SizedBox(height: 10.0),
-            Row(
-              children: [
-                Expanded(
-                  child: MyRadioButton(
-                    title: ProductTypeEnum.Downloadable.name,
-                    value: ProductTypeEnum.Downloadable,
-                    groupValue: _productTypeEnum,
-                    onChanged: (val) {
-                      setState(() {
-                        _productTypeEnum = val!;
-                      });
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: MyRadioButton(
-                    title: ProductTypeEnum.Deliverable.name,
-                    value: ProductTypeEnum.Deliverable,
-                    groupValue: _productTypeEnum,
-                    onChanged: (val) {
-                      setState(() {
-                        _productTypeEnum = val!;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10.0),
-            DropdownButtonFormField(
-              value: _selectedVal,
-              items: _productSizeList
-                  .map((e) => DropdownMenuItem(child: Text(e), value: e))
-                  .toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedVal = value;
-                });
-              },
-              icon: const Icon(
-                Icons.arrow_drop_down_circle,
-                color: Colors.deepPurple,
+            Text(
+              "Add Product Details",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.teal.shade800,
               ),
-              dropdownColor: Colors.deepPurple.shade50,
-              decoration: InputDecoration(
-                labelText: "Product Sizes",
-                prefixIcon: Icon(
-                  Icons.accessibility_new_rounded,
-                  color: Colors.deepPurple,
-                ),
-                border: UnderlineInputBorder(),
+            ),
+            SizedBox(height: 30.0),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  MyTextField(
+                    fieldName: 'Product Name',
+                    myController: _productController,
+                    myIcon: Icons.propane_outlined,
+                    prefixIconColor: Colors.deepOrange.shade300,
+                  ),
+                  SizedBox(height: 10.0),
+                  MyTextField(
+                    fieldName: 'Product Description',
+                    myController: _productDController,
+                    myIcon: Icons.description_outlined,
+                    prefixIconColor: Colors.orange.shade300,
+                  ),
+                  SizedBox(height: 10.0),
+                  MyCheckBox(
+                    value: _listTileCheckBox,
+                    onChanged: (val) {
+                      setState(() {
+                        _listTileCheckBox = val;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 10.0),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: MyRadioButton(
+                          title: ProductTypeEnum.Downloadable.name,
+                          value: ProductTypeEnum.Downloadable,
+                          groupValue: _productTypeEnum,
+                          onChanged: (val) {
+                            setState(() {
+                              _productTypeEnum = val!;
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: MyRadioButton(
+                          title: ProductTypeEnum.Deliverable.name,
+                          value: ProductTypeEnum.Deliverable,
+                          groupValue: _productTypeEnum,
+                          onChanged: (val) {
+                            setState(() {
+                              _productTypeEnum = val!;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.0),
+                  DropdownButtonFormField(
+                    value: _selectedVal,
+                    items: _productSizeList
+                        .map((e) => DropdownMenuItem(child: Text(e), value: e))
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedVal = value;
+                      });
+                    },
+                    icon: const Icon(
+                      Icons.arrow_drop_down_circle,
+                      color: Colors.deepOrange,
+                    ),
+                    dropdownColor: Colors.deepOrange.shade50,
+                    decoration: InputDecoration(
+                      labelText: "Product Sizes",
+                      prefixIcon: Icon(
+                        Icons.accessibility_new_rounded,
+                        color: Colors.deepOrange,
+                      ),
+                      border: UnderlineInputBorder(),
+                    ),
+                  ),
+                 SizedBox(height: 10.0),
+                  MyButton(
+                    onPress: () {
+                      if (_formKey.currentState!.validate()) {
+
+                        ProductDetails productDetails = ProductDetails();
+                        productDetails.productName = _productController.text;
+                        productDetails.productDetails = _productDController.text;
+                        productDetails.isTopProduct = _listTileCheckBox!;
+                        productDetails.productType = _productTypeEnum;
+                        productDetails.productSize = _selectedVal!;
+
+                        Navigator.push(
+                          context, MaterialPageRoute(builder: (context){
+                            return Details(productDetails: productDetails);
+                          })  );
+                      }
+                    },
+                  ),
+                ],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  OutlinedButton myBtn(BuildContext context) {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(minimumSize: const Size(200, 50)),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return Details(productName: _productController.text);
-            },
-          ),
-        );
-      },
-      child: Text(
-        "Submit",
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-}
-
-class MyTextField extends StatelessWidget {
-  const MyTextField({
-    super.key,
-    required this.fieldName,
-    required this.myController,
-    this.myIcon = Icons.verified_user_outlined,
-    this.prefixIconColor = Colors.blueAccent,
-  });
-
-  final TextEditingController myController;
-  final String fieldName;
-  final IconData myIcon;
-  final Color prefixIconColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: myController,
-      decoration: InputDecoration(
-        labelText: fieldName,
-        prefixIcon: Icon(myIcon, color: prefixIconColor),
-        border: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.deepPurple.shade300),
-        ),
-        labelStyle: const TextStyle(color: Colors.deepPurple),
       ),
     );
   }
@@ -193,14 +187,14 @@ class MyCheckBox extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
-          color: Colors.deepPurple.shade50,
+          color: Colors.deepOrange.shade50,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Checkbox(
               checkColor: Colors.white,
-              activeColor: Colors.deepPurple,
+              activeColor: Colors.deepOrange,
               tristate: true,
               value: value,
               onChanged: onChanged,
